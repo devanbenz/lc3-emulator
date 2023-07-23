@@ -11,7 +11,7 @@ pub struct Registers {
     r6: u16,
     r7: u16,
     pc: u16,
-    cd: u16
+    cd: u16,
 }
 
 impl Registers {
@@ -25,41 +25,40 @@ impl Registers {
             r5: 0x0,
             r6: 0x0,
             r7: 0x0,
-            pc: INIT_PC, // program counter  
+            pc: INIT_PC, // program counter
             cd: 0x0,     // condition flag
         }
     }
 
-    pub fn load(mut self, register: u8, value: u16) {
+    pub fn load(&mut self, register: u8, value: u16) {
         match register {
-            0x1 => self.r0 = value,
-            0x2 => self.r1 = value,
-            0x3 => self.r2 = value,
-            0x4 => self.r3 = value,
-            0x5 => self.r4 = value,
-            0x6 => self.r5 = value,
-            0x7 => self.r6 = value,
-            0x8 => self.r7 = value,
-            0x9 => self.pc = value,
-            0x10 => self.cd = value,
-            _ => panic!("ERR 0: out of bounds index") 
+            0x0 => self.r0 = value,
+            0x1 => self.r1 = value,
+            0x2 => self.r2 = value,
+            0x3 => self.r3 = value,
+            0x4 => self.r4 = value,
+            0x5 => self.r5 = value,
+            0x6 => self.r6 = value,
+            0x7 => self.r7 = value,
+            0x8 => self.pc = value,
+            0x9 => self.cd = value,
+            _ => panic!("ERR 0: out of bounds index"),
         }
     }
 
     pub fn read(self, register: u8) -> u16 {
         match register {
-            0x1 => self.r0,
-            0x2 => self.r1,
-            0x3 => self.r2,
-            0x4 => self.r3,
-            0x5 => self.r4,
-            0x6 => self.r5,
-            0x7 => self.r6,
-            0x8 => self.r7,
-            0x9 => self.pc,
-            0x10 => self.cd,
-            _ => unimplemented!() 
-
+            0x0 => self.r0,
+            0x1 => self.r1,
+            0x2 => self.r2,
+            0x3 => self.r3,
+            0x4 => self.r4,
+            0x5 => self.r5,
+            0x6 => self.r6,
+            0x7 => self.r7,
+            0x8 => self.pc,
+            0x9 => self.cd,
+            _ => unimplemented!(),
         }
     }
 

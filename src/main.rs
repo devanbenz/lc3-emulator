@@ -1,7 +1,9 @@
-use hardware::{Memory, instructions::decode_operation};
+use hardware::instructions::execute_instruction;
 
 mod hardware;
 
 fn main() {
-    decode_operation(0b1111_0000_0000_0000);
+    let mut vm = hardware::VM::new();
+    execute_instruction(&mut vm, 0b1110_001_000000010);
+    execute_instruction(&mut vm, 0b0010_001_001_000_001);
 }
