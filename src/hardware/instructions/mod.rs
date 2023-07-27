@@ -1,25 +1,49 @@
 use super::{registers::Registers, VM};
 
 enum OpCode {
-    HALT = 0b1111,
-    ADD = 0b0010,
+    BR = 0b0000,
+    ADD = 0b0001,
+    AND = 0b0101,
+    JMP = 0b1100,
+    JSR = 0b0100,
+    LD = 0b0010,
+    LDI = 0b1010,
+    LDR = 0b0110,
     LEA = 0b1110,
+    NOT = 0b1001,
+    RTI = 0b1000,
+    ST = 0b0011,
+    STI = 0b1011,
+    STR = 0b0111,
+    TRAP = 0b1111,
 }
 
 pub fn execute_instruction(vm: &mut VM, instruction: u16) {
     let opcode = decode_operation(instruction);
 
     match opcode {
+        Some(OpCode::BR) => add(instruction, vm.registers),
         Some(OpCode::ADD) => add(instruction, vm.registers),
-        Some(OpCode::HALT) => halt(instruction),
+        Some(OpCode::AND) => lea(instruction, vm),
+        Some(OpCode::JMP) => lea(instruction, vm),
+        Some(OpCode::JSR) => lea(instruction, vm),
+        Some(OpCode::LD) => lea(instruction, vm),
+        Some(OpCode::LDI) => lea(instruction, vm),
+        Some(OpCode::LDR) => lea(instruction, vm),
+        Some(OpCode::ST) => lea(instruction, vm),
+        Some(OpCode::STI) => lea(instruction, vm),
+        Some(OpCode::STR) => lea(instruction, vm),
         Some(OpCode::LEA) => lea(instruction, vm),
+        Some(OpCode::NOT) => lea(instruction, vm),
+        Some(OpCode::RTI) => lea(instruction, vm),
+        Some(OpCode::TRAP) => lea(instruction, vm),
         None => panic!("ERR: Out of bounds error"),
     }
 }
 
 fn decode_operation(instruction: u16) -> Option<OpCode> {
     match instruction >> 12 {
-        0b1111 => Some(OpCode::HALT),
+        0b1111 => Some(OpCode::TRAP),
         0b0010 => Some(OpCode::ADD),
         0b1110 => Some(OpCode::LEA),
         _ => unimplemented!(),
